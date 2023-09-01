@@ -1,6 +1,11 @@
+<script lang="ts">
+	const menus = ['💻 Developer', '🎨 Designer', '📝 Planner'];
+</script>
+
 <nav class="bg-gray-600 text-white p-5">
 	<ul>
-		<li>Developer</li>
-		<li>Designer</li>
+		{#each menus as menu}
+			<li>{menu}</li>
+		{/each}
 	</ul>
 </nav>
