@@ -1,9 +1,39 @@
 <script>
 	import { gql } from '@apollo/client/core';
-	import { query } from 'svelte-apollo';
+	import { error } from '@sveltejs/kit';
+	import { createEventDispatcher } from 'svelte';
+	import { query, mutation } from 'svelte-apollo';
 
 	export let inputs;
 	console.log(inputs);
+
+	const DELETE_TEAM = gql`
+		mutation DeleteTeam($id: ID!) {
+			deleteTeam(id: $id) {
+				id
+			}
+		}
+	`;
+
+	const deleteTeam = mutation(DELETE_TEAM);
+	async function execDeleteTeam() {
+		if (!window.confirm('이 항목을 삭제하시겠습니까?')) {
+			return;
+		}
+		try {
+			await deleteTeam({ variables: { id: inputs.id } });
+			deleteTeamCompleted();
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	const dispatch = createEventDispatcher();
+	function deleteTeamCompleted() {
+		alert(`${inputs.id} 항목이 삭제되었습니다.`);
+		dispatch('set-id', 0);
+	}
+	// ...
 </script>
 
 <div class="bg-white p-5 border border-gray-50">
@@ -51,7 +81,7 @@
       )} -->
 	<div className="buttons">
 		<button on:click={() => {}}>Modify</button>
-		<button on:click={() => {}}>Delete</button>
+		<button on:click={execDeleteTeam}>Delete</button>
 		<button
 			on:click={() => {
 				setContentId(0);
