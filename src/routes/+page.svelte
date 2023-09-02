@@ -1,11 +1,21 @@
 <script>
 	import Header from '../components/Header.svelte';
-	import Nav from '../components/Nav.svelte';
+	import Roles from '../components/Roles.svelte';
+
+	import { ApolloClient, InMemoryCache } from '@apollo/client/core';
+	import { setClient } from 'svelte-apollo';
+
+	const client = new ApolloClient({
+		uri: 'http://localhost:4000',
+		cache: new InMemoryCache()
+	});
+	// ...
+	setClient(client);
 </script>
 
 <div class="wrapper">
 	<Header />
-	<Nav />
+	<Roles />
 	<main>Main</main>
 	<aside>Aside</aside>
 </div>
