@@ -16,7 +16,6 @@
 <div class="wrapper">
 	<Header />
 	<Roles />
-	<main>Main</main>
 	<aside>Aside</aside>
 </div>
 
