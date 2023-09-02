@@ -1,5 +1,9 @@
 <script lang="ts">
-	const menus = ['Roles', 'Teams', 'Pepole'];
+	const menus = [
+		{ link: '/roles', name: 'Roles' },
+		{ link: '/', name: 'Teams' },
+		{ link: '/people', name: 'Pepole' }
+	];
 </script>
 
 <header class="bg-white flex gap-5 items-center">
@@ -7,7 +11,7 @@
 	<nav>
 		<ul class="flex gap-5">
 			{#each menus as menu}
-				<li>{menu}</li>
+				<li><a href={menu.link}>{menu.name}</a></li>
 			{/each}
 		</ul>
 	</nav>
