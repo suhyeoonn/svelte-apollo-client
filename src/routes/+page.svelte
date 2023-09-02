@@ -1,6 +1,7 @@
 <script>
 	import { gql } from '@apollo/client/core';
 	import { query } from 'svelte-apollo';
+	import Team from '../components/Team.svelte';
 
 	const roleIcons = {
 		developer: '💻',
@@ -23,6 +24,35 @@
 		}
 	`;
 	const teams = query(GET_TEAMS);
+
+	let id = '1';
+	const setContentId = (_id) => {
+		id = _id;
+	};
+
+	const GET_TEAM = gql`
+		query GetTeam($id: ID!) {
+			team(id: $id) {
+				id
+				manager
+				office
+				extension_number
+				mascot
+				cleaning_duty
+				project
+			}
+		}
+	`;
+
+	let team = query(GET_TEAM, {
+		variables: { id }
+	});
+
+	$: {
+		team = query(GET_TEAM, {
+			variables: { id }
+		});
+	}
 </script>
 
 <nav class="bg-gray-600 text-white p-5">
@@ -34,7 +64,7 @@
 		{:else}
 			{#each $teams.data.teams as { id, manager, members }}
 				<li class="p-2">
-					<span class="font-bold text-lg">
+					<span class="font-bold text-lg" on:click={() => setContentId(id)}>
 						Team {id} : {manager}'s
 					</span>
 					<ul class="px-2 divide-y divide-gray-300 text-gray-300">
@@ -51,3 +81,12 @@
 		{/if}
 	</ul>
 </nav>
+<main>
+	{#if $team.loading}
+		<li>Loading...</li>
+	{:else if $team.error}
+		<li>ERROR: {$team.error.message}</li>
+	{:else}
+		<Team inputs={$team.data.team} />
+	{/if}
+</main>

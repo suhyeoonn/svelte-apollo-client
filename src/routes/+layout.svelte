@@ -13,7 +13,7 @@
 	setClient(client);
 </script>
 
-<div class="wrapper">
+<div class="wrapper bg-gray-100">
 	<Header />
 	<slot />
 	<aside>Aside</aside>
