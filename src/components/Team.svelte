@@ -12,13 +12,12 @@
 <div class="bg-white p-5 border border-gray-50">
 	<table>
 		<tbody>
-			<!-- {contentId !== 0 && (
-          
-        )} -->
-			<tr>
-				<td>Id</td>
-				<td>{inputs.id}</td>
-			</tr>
+			{#if inputs.id}
+				<tr>
+					<td>Id</td>
+					<td>{inputs.id}</td>
+				</tr>
+			{/if}
 			<tr>
 				<td>Manager</td>
 				<td><input type="text" name="manager" bind:value={inputs.manager} /></td>
@@ -45,22 +44,21 @@
 			</tr>
 		</tbody>
 	</table>
-	<!-- {contentId === 0 ? 
-      (<div className="buttons">
-        <button on:click={() => {}}>Submit</button>
-      </div>
-      ) : (
-      
-      )} -->
-	<div>
-		<button on:click={() => dispatch('edit', inputs)}>Modify</button>
-		<button on:click={() => dispatch('delete')}>Delete</button>
-		<!-- <button
+	{#if !inputs.id}
+		<div>
+			<button on:click={() => dispatch('post', inputs)}>Submit</button>
+		</div>
+	{:else}
+		<div>
+			<button on:click={() => dispatch('edit', inputs)}>Modify</button>
+			<button on:click={() => dispatch('delete')}>Delete</button>
+			<!-- <button
 			on:click={() => {
 				setContentId(0);
 			}}>New</button
 		> -->
-	</div>
+		</div>
+	{/if}
 </div>
 
 <style>

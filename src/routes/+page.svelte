@@ -2,7 +2,7 @@
 	import { query, mutation } from 'svelte-apollo';
 	import Team from '../components/Team.svelte';
 	import TeamListItem from '../components/TeamListItem.svelte';
-	import { GET_TEAMS, GET_TEAM, DELETE_TEAM, EDIT_TEAM } from '$lib/queries';
+	import { GET_TEAMS, GET_TEAM, DELETE_TEAM, EDIT_TEAM, POST_TEAM } from '$lib/queries';
 
 	let id = 0;
 	const setContentId = (_id) => {
@@ -57,8 +57,33 @@
 	}
 	function editTeamCompleted() {
 		alert(`${id} 항목이 수정되었습니다.`);
-		// refetchTeams();
 	}
+
+	async function execPostTeam({ detail: inputs }) {
+		delete inputs.id;
+		const { data } = await postTeam({
+			variables: { input: inputs }
+		});
+		postTeamCompleted(data);
+	}
+
+	const postTeam = mutation(POST_TEAM);
+
+	function postTeamCompleted(data) {
+		console.log(data.postTeam);
+		alert(`${data.postTeam.id} 항목이 생성되었습니다.`);
+		teams.refetch();
+	}
+
+	const initTeam = {
+		id: 0,
+		manager: '',
+		office: '',
+		extension_number: '',
+		mascot: '',
+		cleaning_duty: '',
+		project: ''
+	};
 </script>
 
 <nav class="bg-gray-600 text-white p-5">
@@ -76,7 +101,7 @@
 </nav>
 <main>
 	{#if !id}
-		<p>select team</p>
+		<Team inputs={{ ...initTeam }} on:post={execPostTeam} />
 	{:else if $team.loading}
 		<p>Loading...</p>
 	{:else if $team.error}

@@ -50,3 +50,17 @@ export const EDIT_TEAM = gql`
 		}
 	}
 `;
+
+export const POST_TEAM = gql`
+	mutation PostTeam($input: PostTeamInput!) {
+		postTeam(input: $input) {
+			id
+			manager
+			office
+			extension_number
+			mascot
+			cleaning_duty
+			project
+		}
+	}
+`;
