@@ -6,14 +6,12 @@
 
 	const teams = query(GET_TEAMS);
 
-	let id = '1';
+	let id = 0;
 	const setContentId = ({ detail: _id }) => {
 		id = _id;
 	};
 
-	let team = query(GET_TEAM, {
-		variables: { id }
-	});
+	let team;
 
 	$: {
 		team = query(GET_TEAM, {
@@ -36,10 +34,12 @@
 	</ul>
 </nav>
 <main>
-	{#if $team.loading}
-		<li>Loading...</li>
+	{#if !id}
+		<p>select team</p>
+	{:else if $team.loading}
+		<p>Loading...</p>
 	{:else if $team.error}
-		<li>ERROR: {$team.error.message}</li>
+		<p>ERROR: {$team.error.message}</p>
 	{:else}
 		<Team inputs={$team.data.team} />
 	{/if}
