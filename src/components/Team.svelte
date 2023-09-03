@@ -1,9 +1,12 @@
 <script>
 	import { gql } from '@apollo/client/core';
+	import { createEventDispatcher } from 'svelte';
 	import { query } from 'svelte-apollo';
 
 	export let inputs;
 	console.log(inputs);
+
+	const dispatch = createEventDispatcher();
 </script>
 
 <div class="bg-white p-5 border border-gray-50">
@@ -51,7 +54,7 @@
       )} -->
 	<div className="buttons">
 		<button on:click={() => {}}>Modify</button>
-		<button on:click={() => {}}>Delete</button>
+		<button on:click={() => dispatch('delete')}>Delete</button>
 		<button
 			on:click={() => {
 				setContentId(0);

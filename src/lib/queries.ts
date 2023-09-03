@@ -28,3 +28,11 @@ export const GET_TEAM = gql`
 		}
 	}
 `;
+
+export const DELETE_TEAM = gql`
+	mutation DeleteTeam($id: ID!) {
+		deleteTeam(id: $id) {
+			id
+		}
+	}
+`;
