@@ -24,15 +24,10 @@
 		}
 	`;
 	const teams = query(GET_TEAMS);
-	$: teams.refetch({ id });
 
-	let id = 0;
+	let id = '1';
 	const setContentId = (_id) => {
-		console.log(_id);
 		id = _id;
-		if (id) {
-			fetchTeam();
-		}
 	};
 
 	const GET_TEAM = gql`
@@ -49,16 +44,15 @@
 		}
 	`;
 
-	// let team = query(GET_TEAM, {
-	// 	variables: { id }
-	// });
+	let team = query(GET_TEAM, {
+		variables: { id }
+	});
 
-	let team;
-	const fetchTeam = () => {
+	$: {
 		team = query(GET_TEAM, {
 			variables: { id }
 		});
-	};
+	}
 </script>
 
 <nav class="bg-gray-600 text-white p-5">
@@ -70,7 +64,7 @@
 		{:else}
 			{#each $teams.data.teams as { id, manager, members }}
 				<li class="p-2">
-					<span class="font-bold text-lg" on:keydown on:click={() => setContentId(id)}>
+					<span class="font-bold text-lg" on:click={() => setContentId(id)}>
 						Team {id} : {manager}'s
 					</span>
 					<ul class="px-2 divide-y divide-gray-300 text-gray-300">
@@ -88,13 +82,11 @@
 	</ul>
 </nav>
 <main>
-	{#if !id || !team}
-		<p>Select Team</p>
-	{:else if $team.loading}
-		<p>Loading...</p>
+	{#if $team.loading}
+		<li>Loading...</li>
 	{:else if $team.error}
-		<p>ERROR: {$team.error.message}</p>
+		<li>ERROR: {$team.error.message}</li>
 	{:else}
-		<Team inputs={$team.data.team} on:set-id={(payload) => setContentId(payload.id)} />
+		<Team inputs={$team.data.team} />
 	{/if}
 </main>
