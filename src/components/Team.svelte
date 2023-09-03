@@ -21,27 +21,27 @@
 			</tr>
 			<tr>
 				<td>Manager</td>
-				<td><input type="text" name="manager" value={inputs.manager} /></td>
+				<td><input type="text" name="manager" bind:value={inputs.manager} /></td>
 			</tr>
 			<tr>
 				<td>Office</td>
-				<td><input type="text" name="office" value={inputs.office} /></td>
+				<td><input type="text" name="office" bind:value={inputs.office} /></td>
 			</tr>
 			<tr>
 				<td>Extension Number</td>
-				<td><input type="text" name="extension_number" value={inputs.extension_number} /></td>
+				<td><input type="text" name="extension_number" bind:value={inputs.extension_number} /></td>
 			</tr>
 			<tr>
 				<td>Mascot</td>
-				<td><input type="text" name="mascot" value={inputs.mascot} /></td>
+				<td><input type="text" name="mascot" bind:value={inputs.mascot} /></td>
 			</tr>
 			<tr>
 				<td>Cleaning Duty</td>
-				<td><input type="text" name="cleaning_duty" value={inputs.cleaning_duty} /></td>
+				<td><input type="text" name="cleaning_duty" bind:value={inputs.cleaning_duty} /></td>
 			</tr>
 			<tr>
 				<td>Project</td>
-				<td><input type="text" name="project" value={inputs.project} /></td>
+				<td><input type="text" name="project" bind:value={inputs.project} /></td>
 			</tr>
 		</tbody>
 	</table>
@@ -52,14 +52,14 @@
       ) : (
       
       )} -->
-	<div className="buttons">
-		<button on:click={() => {}}>Modify</button>
+	<div>
+		<button on:click={() => dispatch('edit', inputs)}>Modify</button>
 		<button on:click={() => dispatch('delete')}>Delete</button>
-		<button
+		<!-- <button
 			on:click={() => {
 				setContentId(0);
 			}}>New</button
-		>
+		> -->
 	</div>
 </div>
 

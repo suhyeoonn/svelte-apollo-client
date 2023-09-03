@@ -36,3 +36,17 @@ export const DELETE_TEAM = gql`
 		}
 	}
 `;
+
+export const EDIT_TEAM = gql`
+	mutation EditTeam($id: ID!, $input: PostTeamInput!) {
+		editTeam(id: $id, input: $input) {
+			id
+			manager
+			office
+			extension_number
+			mascot
+			cleaning_duty
+			project
+		}
+	}
+`;

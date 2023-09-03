@@ -13,7 +13,7 @@
 </script>
 
 <li class="p-2">
-	<span class="font-bold text-lg" on:click={() => dispatch('set-id', id)}>
+	<span class="font-bold text-lg" on:keydown on:click={() => dispatch('set-id', id)}>
 		Team {id} : {manager}'s
 	</span>
 	<ul class="px-2 divide-y divide-gray-300 text-gray-300">
