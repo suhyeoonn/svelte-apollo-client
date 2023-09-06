@@ -1,5 +1,5 @@
 <script>
-	import { GET_PEOPLE, GET_PERSON } from '$lib/queries';
+	import { GET_PEOPLE, GET_PERSON } from '$lib/peopleQuries';
 	import { query, mutation } from 'svelte-apollo';
 	import PersonInfo from '../../components/PersonInfo.svelte';
 	import AsidePeople from '../../components/AsidePeople.svelte';
@@ -7,11 +7,6 @@
 	const people = query(GET_PEOPLE);
 
 	let contentId;
-
-	// let person = query(GET_PERSON, {
-	// 	variables: { contentId }
-	// });
-	// $: person.refetch({ id: contentId });
 
 	let person;
 	$: if (contentId) {
@@ -22,7 +17,6 @@
 
 	const setContentId = (id) => {
 		contentId = id;
-		alert(contentId);
 	};
 </script>
 
